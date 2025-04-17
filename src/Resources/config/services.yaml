@@ -9,3 +9,4 @@ services:
 
   Tourze\Symfony\RuntimeContextBundle\Service\ContextServiceInterface:
     class: Tourze\Symfony\RuntimeContextBundle\Service\DefaultContextService
+    public: true
