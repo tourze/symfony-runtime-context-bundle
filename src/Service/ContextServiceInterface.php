@@ -2,7 +2,9 @@
 
 namespace Tourze\Symfony\RuntimeContextBundle\Service;
 
-interface ContextServiceInterface
+use Symfony\Contracts\Service\ResetInterface;
+
+interface ContextServiceInterface extends ResetInterface
 {
     /**
      * 获取上下文唯一ID
