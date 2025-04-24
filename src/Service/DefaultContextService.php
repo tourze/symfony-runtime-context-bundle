@@ -2,10 +2,12 @@
 
 namespace Tourze\Symfony\RuntimeContextBundle\Service;
 
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Tourze\Symfony\RuntimeContextBundle\EventSubscriber\DeferCallSubscriber;
 
+#[Autoconfigure(public: true)]
 class DefaultContextService implements ContextServiceInterface
 {
     private static int $maxId = 0;

@@ -2,8 +2,10 @@
 
 namespace Tourze\Symfony\RuntimeContextBundle\Service;
 
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Contracts\Service\ResetInterface;
 
+#[Autoconfigure(public: true)]
 interface ContextServiceInterface extends ResetInterface
 {
     /**
