@@ -12,7 +12,8 @@
     "symfony/http-kernel": "^6.4",
     "symfony/framework-bundle": "^6.4",
     "symfony/yaml": "^6.4 || ^7.1",
-    "symfony/service-contracts": "^3.5"
+    "symfony/service-contracts": "^3.5",
+    "tourze/backtrace-helper": "~0.0.5"
   },
   "autoload": {
     "psr-4": {

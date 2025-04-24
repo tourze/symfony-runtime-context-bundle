@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tourze\Symfony\RuntimeContextBundle\Tests\Service;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Tourze\Symfony\RuntimeContextBundle\EventSubscriber\DeferCallSubscriber;
 use Tourze\Symfony\RuntimeContextBundle\Service\ContextServiceInterface;
 use Tourze\Symfony\RuntimeContextBundle\Service\DefaultContextService;
@@ -13,14 +14,16 @@ class DefaultContextServiceTest extends TestCase
 {
     public function testImplementsContextServiceInterface()
     {
-        $subscriber = new DeferCallSubscriber();
+        $logger = $this->createMock(LoggerInterface::class);
+        $subscriber = new DeferCallSubscriber($logger);
         $service = new DefaultContextService($subscriber);
         $this->assertInstanceOf(ContextServiceInterface::class, $service);
     }
 
     public function testGetIdReturnsPidOrUniqueId()
     {
-        $subscriber = new DeferCallSubscriber();
+        $logger = $this->createMock(LoggerInterface::class);
+        $subscriber = new DeferCallSubscriber($logger);
         $service = new DefaultContextService($subscriber);
         $id = $service->getId();
         $this->assertNotEmpty($id);
@@ -29,7 +32,8 @@ class DefaultContextServiceTest extends TestCase
 
     public function testResetClearsId()
     {
-        $subscriber = new DeferCallSubscriber();
+        $logger = $this->createMock(LoggerInterface::class);
+        $subscriber = new DeferCallSubscriber($logger);
         $service = new DefaultContextService($subscriber);
         $id1 = $service->getId();
         $service->reset();
@@ -41,7 +45,9 @@ class DefaultContextServiceTest extends TestCase
 
     public function testDeferPushesCallbackToSubscriber()
     {
+        $logger = $this->createMock(LoggerInterface::class);
         $subscriber = $this->getMockBuilder(DeferCallSubscriber::class)
+            ->setConstructorArgs([$logger])
             ->onlyMethods(['addDeferCall'])
             ->getMock();
         $subscriber->expects($this->once())
@@ -52,7 +58,8 @@ class DefaultContextServiceTest extends TestCase
 
     public function testSupportCoroutineReturnsFalse()
     {
-        $subscriber = new DeferCallSubscriber();
+        $logger = $this->createMock(LoggerInterface::class);
+        $subscriber = new DeferCallSubscriber($logger);
         $service = new DefaultContextService($subscriber);
         $this->assertFalse($service->supportCoroutine());
     }

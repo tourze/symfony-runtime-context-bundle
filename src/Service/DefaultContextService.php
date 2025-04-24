@@ -4,10 +4,9 @@ namespace Tourze\Symfony\RuntimeContextBundle\Service;
 
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Contracts\Service\ResetInterface;
 use Tourze\Symfony\RuntimeContextBundle\EventSubscriber\DeferCallSubscriber;
 
-class DefaultContextService implements ContextServiceInterface, ResetInterface
+class DefaultContextService implements ContextServiceInterface
 {
     private static int $maxId = 0;
     private string $id = '';

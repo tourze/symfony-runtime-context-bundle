@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Tourze\Symfony\RuntimeContextBundle\Tests\EventSubscriber;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Tourze\Symfony\RuntimeContextBundle\EventSubscriber\DeferCallSubscriber;
 
 class DeferCallSubscriberTest extends TestCase
 {
     public function testAddAndExecuteDeferCalls()
     {
-        $subscriber = new DeferCallSubscriber();
+        $logger = $this->createMock(LoggerInterface::class);
+        $subscriber = new DeferCallSubscriber($logger);
         $executed = [];
         $subscriber->addDeferCall(function () use (&$executed) { $executed[] = 'a'; });
         $subscriber->addDeferCall(function () use (&$executed) { $executed[] = 'b'; });
@@ -21,7 +23,10 @@ class DeferCallSubscriberTest extends TestCase
 
     public function testExceptionInDeferCallIsSwallowed()
     {
-        $subscriber = new DeferCallSubscriber();
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error');
+
+        $subscriber = new DeferCallSubscriber($logger);
         $executed = false;
         $subscriber->addDeferCall(function () { throw new \RuntimeException('fail'); });
         $subscriber->addDeferCall(function () use (&$executed) { $executed = true; });
