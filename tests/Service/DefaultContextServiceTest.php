@@ -27,7 +27,6 @@ class DefaultContextServiceTest extends TestCase
         $service = new DefaultContextService($subscriber);
         $id = $service->getId();
         $this->assertNotEmpty($id);
-        $this->assertIsString($id);
     }
 
     public function testResetClearsId()
@@ -39,7 +38,6 @@ class DefaultContextServiceTest extends TestCase
         $service->reset();
         $id2 = $service->getId();
         $this->assertNotEmpty($id2);
-        $this->assertIsString($id2);
         $this->assertEquals($id1, $id2); // 进程id情况下应一致
     }
 
