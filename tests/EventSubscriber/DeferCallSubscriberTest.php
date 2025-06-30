@@ -7,6 +7,7 @@ namespace Tourze\Symfony\RuntimeContextBundle\Tests\EventSubscriber;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Tourze\Symfony\RuntimeContextBundle\EventSubscriber\DeferCallSubscriber;
+use Tourze\Symfony\RuntimeContextBundle\Exception\DeferCallExecutionException;
 
 class DeferCallSubscriberTest extends TestCase
 {
@@ -28,7 +29,7 @@ class DeferCallSubscriberTest extends TestCase
 
         $subscriber = new DeferCallSubscriber($logger);
         $executed = false;
-        $subscriber->addDeferCall(function () { throw new \RuntimeException('fail'); });
+        $subscriber->addDeferCall(function () { throw new DeferCallExecutionException('fail'); });
         $subscriber->addDeferCall(function () use (&$executed) { $executed = true; });
         $subscriber->executeDeferCalls();
         $this->assertTrue($executed);
