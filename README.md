@@ -1,5 +1,13 @@
 # Symfony Runtime Context Bundle
 
+[English](README.md) | [中文](README.zh-CN.md)
+
+[![Latest Version](https://img.shields.io/packagist/v/tourze/symfony-runtime-context-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/symfony-runtime-context-bundle)
+[![Total Downloads](https://img.shields.io/packagist/dt/tourze/symfony-runtime-context-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/symfony-runtime-context-bundle)
+[![PHP Version Require](https://img.shields.io/packagist/php-v/tourze/symfony-runtime-context-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/symfony-runtime-context-bundle)
+[![License](https://img.shields.io/packagist/l/tourze/symfony-runtime-context-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/symfony-runtime-context-bundle)
+[![Coverage Status](https://img.shields.io/codecov/c/github/tourze/symfony-runtime-context-bundle.svg?style=flat-square)](https://codecov.io/gh/tourze/symfony-runtime-context-bundle)
+
 > Context management module for Symfony applications, supporting deferred task execution and unique context identification.
 
 ## Features

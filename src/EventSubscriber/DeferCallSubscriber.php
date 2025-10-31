@@ -2,16 +2,18 @@
 
 namespace Tourze\Symfony\RuntimeContextBundle\EventSubscriber;
 
+use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Tourze\BacktraceHelper\ExceptionPrinter;
 
+#[WithMonologChannel(channel: 'runtime_context')]
 class DeferCallSubscriber
 {
     /**
-     * @var array 延迟执行的所有信息
+     * @var array<callable> 延迟执行的所有信息
      */
     private array $deferCalls = [];
 
@@ -34,7 +36,7 @@ class DeferCallSubscriber
     #[AsEventListener(event: ConsoleEvents::ERROR)]
     public function executeDeferCalls(): void
     {
-        while (!empty($this->deferCalls)) {
+        while ([] !== $this->deferCalls) {
             $func = array_shift($this->deferCalls);
             try {
                 call_user_func($func);

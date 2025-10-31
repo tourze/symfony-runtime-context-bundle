@@ -7,6 +7,9 @@ services:
   Tourze\Symfony\RuntimeContextBundle\EventSubscriber\:
     resource: '../../EventSubscriber/'
 
+  Tourze\Symfony\RuntimeContextBundle\Service\:
+    resource: '../../Service/'
+
   Tourze\Symfony\RuntimeContextBundle\Service\ContextServiceInterface:
     class: Tourze\Symfony\RuntimeContextBundle\Service\DefaultContextService
     public: true

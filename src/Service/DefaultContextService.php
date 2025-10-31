@@ -2,21 +2,23 @@
 
 namespace Tourze\Symfony\RuntimeContextBundle\Service;
 
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Tourze\Symfony\RuntimeContextBundle\EventSubscriber\DeferCallSubscriber;
 
 #[Autoconfigure(public: true)]
+#[AsAlias(id: ContextServiceInterface::class)]
 class DefaultContextService implements ContextServiceInterface
 {
     private static int $maxId = 0;
+
     private string $id = '';
 
     public function __construct(
         private readonly DeferCallSubscriber $deferCallSubscriber,
-    )
-    {
+    ) {
     }
 
     #[AsEventListener(event: KernelEvents::TERMINATE, priority: -11000)]
@@ -30,19 +32,22 @@ class DefaultContextService implements ContextServiceInterface
         // 默认是获取进程id来作为上下文id
         // 失败的话再自己生成
         $id = getmypid();
-        if ($id === false) {
-            if (empty($this->id)) {
+        if (false === $id) {
+            if ('' === $this->id) {
                 $this->id = $this->generateUniqueId();
             }
+
             return $this->id;
         }
-        return "pid-$id";
+
+        return "pid-{$id}";
     }
 
     private function generateUniqueId(): string
     {
         // 使用时间戳和自增的唯一标识符
-        self::$maxId++;
+        ++self::$maxId;
+
         return uniqid('', true) . '-' . self::$maxId;
     }
 
