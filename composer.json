@@ -12,6 +12,7 @@
     "symfony/event-dispatcher": "^7.3",
     "symfony/framework-bundle": "^7.3",
     "symfony/http-kernel": "^7.3",
+    "symfony/property-access": "^7.3",
     "symfony/service-contracts": "^3.6",
     "symfony/yaml": "^7.3",
     "tourze/backtrace-helper": "1.*",
